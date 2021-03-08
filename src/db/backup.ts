@@ -9,6 +9,8 @@
 export interface BackupExecution {
   date: Date;
   time?: number;
+  files?: number;
+  size?: number;
   status: 'error' | 'success';
 }
 

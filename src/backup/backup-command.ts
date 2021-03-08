@@ -18,7 +18,7 @@ import Command from './command';
  * @since 04.03.21
  */
 export default class BackupCommand implements Command<Backup> {
-  uploader: any;
+  uploader: FileUploader;
 
   constructor(uploader: FileUploader) {
     this.uploader = uploader;
@@ -55,10 +55,13 @@ export default class BackupCommand implements Command<Backup> {
       },
       [finalPath]);
 
-      await this.uploader.upload({
+      const uploadResult = await this.uploader.upload({
         body: stream,
         name: `backup/${backup.name}.tgz`,
       });
+
+      execution.time = uploadResult.time;
+      execution.size = uploadResult.size;
     } catch (e) {
       console.log('Error: %o', e); // eslint-disable-line
       execution.status = 'error';
@@ -66,8 +69,8 @@ export default class BackupCommand implements Command<Backup> {
     result.executions = (result.executions || []);
 
     const now = new Date();
-    execution.time = now.getTime() - execution.date.getTime();
     execution.date = now;
+    result.lastBackup = now;
     result.executions.push(execution);
 
     return result;

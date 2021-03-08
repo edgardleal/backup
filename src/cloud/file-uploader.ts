@@ -10,6 +10,12 @@ export interface UploadRequest {
   body: Buffer | any;
   name: string;
 }
+
+export interface UploadResult {
+  size?: number;
+  time?: number;
+}
+
 export default interface FileUploader {
-  upload: (req: UploadRequest) => Promise<void>;
+  upload: (req: UploadRequest) => Promise<UploadResult>;
 }
