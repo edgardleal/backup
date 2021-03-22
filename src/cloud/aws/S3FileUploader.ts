@@ -52,6 +52,7 @@ export default class S3FileUploader implements FileUploader {
         Bucket: this.bucketName,
         Body: req.body,
         Key: req.name,
+        StorageClass: 'STANDARD_IA',
       });
 
       upload.on('httpUploadProgress', this.progress.bind(this));

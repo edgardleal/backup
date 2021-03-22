@@ -7,7 +7,7 @@
  */
 
 import fs from 'fs';
-import Backup from '../backup';
+import Backup from '../../backup-definition/backup';
 import BackupFinder from '../backup-finder';
 import BackupReader from '../backup-reader';
 
@@ -45,6 +45,7 @@ export default class DiskBackupFinder implements BackupFinder {
       const file = list[i];
       const backup = await this.reader.read(file);
       if (backup && (!filter.name || backup.name.indexOf(filter.name))) {
+        backup.lastBackup = backup.lastBackup ? new Date(backup.lastBackup!) : new Date(1);
         result.push(backup!);
       }
     }

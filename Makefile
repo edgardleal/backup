@@ -11,21 +11,25 @@ modules = $(wildcard node_modules/*/*.js)
 
 all: run
 
-node_modules/.last_lint: $(SOURCES)
-	yarn lint || npm run lint
-	touch node_modules/.last_lint
-
-lint: node_modules/.last_lint
-
 node_modules/.bin/tsc: package.json
 	yarn || npm i
 	touch node_modules/.bin/tsc
 
-run: dist/index.js lint
-	DEBUG=backup* node dist/index.js
+node_modules/.last_lint: $(SOURCES) node_modules/.bin/tsc
+	yarn lint || npm run lint
+	@touch node_modules/.last_lint
 
-dist/index.js: $(SOURCES) node_modules/.bin/tsc
+lint: node_modules/.last_lint
+
+list: dist/index.js
+	DEBUG=backup* node dist/index.js list
+
+dist/index.js: $(SOURCES) node_modules/.last_lint
 	./node_modules/.bin/tsc -p tsconfig.json
+	@touch dist/index.js
+
+run: dist/index.js
+	DEBUG=backup* node dist/index.js backup
 
 build: dist/index.js
 

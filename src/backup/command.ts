@@ -5,8 +5,20 @@
  * @author Edgard Leal <edgard.leal@sanar.com>
  * @module command.ts
  */
-import Backup from '../db/backup';
 
-export default interface Command<T = any> {
-  run: (backup: Backup) => Promise<T>;
+export default abstract class Command<T = any> {
+  private nextCommand: Command<T>;
+
+  set next(value: Command<T>) {
+    this.nextCommand = value;
+  }
+
+  async runNext(context: T): Promise<T> {
+    if (this.nextCommand) {
+      return this.nextCommand.run(context);
+    }
+    return context;
+  }
+
+  abstract run(context: T): Promise<T>;
 }
