@@ -7,13 +7,16 @@ DONE = echo ✓ $@ done
 SOURCES = $(shell find src/ -type f -name '*.ts') index.ts
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 modules = $(wildcard node_modules/*/*.js)
-.PHONY: all clean help run build install lint
+.PHONY: all clean help run build install lint docs
 
 all: run
 
 node_modules/.bin/tsc: package.json
 	yarn || npm i
 	touch node_modules/.bin/tsc
+
+docs: ## docs: generate uml diagrans in docs folder
+	$(MAKE) -C docs/
 
 node_modules/.last_lint: $(SOURCES) node_modules/.bin/tsc
 	yarn lint || npm run lint

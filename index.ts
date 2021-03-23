@@ -8,39 +8,11 @@
  */
 require('dotenv/config');
 
-import debug from 'debug';
 import yargs from 'yargs';
-import DBFactory from './src/db/db-factory';
-import CliPresenter from './src/presenter/cli';
-import BackupFactory from './src/backup/backup-factory';
-import BackupCommandContext from './src/backup/backup-command-context';
-import Backup from './src/backup-definition/backup';
+import List from './src/presenter/cli/command/list';
+import Run from './src/presenter/cli/command/run';
 
-const logger = debug('backup:main');
-
-const { hideBin } = require('yargs/helpers')
-
-async function run() {
-  const dbFactory = new DBFactory();
-  const backups: Backup[] = await dbFactory.getBackupFinder().find({});
-
-  for (let i = 0; i < backups.length; i += 1) {
-    const backup: BackupCommandContext = {
-      ...backups[i],
-      currenteExecution: {
-        date: new Date(),
-        status: 'success',
-      },
-    }
-
-    logger('Running backup %s ...', backup.name);
-    const result = await BackupFactory.getBackupCommant().run(backup);
-    result.executions = (result.executions || []);
-    result.executions.push(result.currenteExecution);
-    await dbFactory.getBackupWriter().write(result);
-  }
-  logger('Done');
-}
+const { hideBin } = require('yargs/helpers');
 
 (async () => {
   // eslint-disable-next-line no-unused-expressions
@@ -51,13 +23,8 @@ async function run() {
           describe: 'fild used to sort data',
           default: 'lastBackup',
         })
-    }, async () => {
-      const dbFactory = new DBFactory();
-      const backups: Backup[] = await dbFactory.getBackupFinder().find({});
-      const presenter = new CliPresenter();
-      presenter.show(backups);
-    })
-    .command('backup', 'Execute all backups', run)
+    }, async () => new List().run())
+    .command('backup', 'Execute all backups', () => new Run().run())
     .option('verbose', {
       alias: 'v',
       type: 'boolean',

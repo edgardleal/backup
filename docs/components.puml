@@ -1,0 +1,58 @@
+@startuml
+skinparam componentStype uml2
+
+interface Backup
+[Main]
+
+package Upload {
+  component S3
+  component Cloud
+}
+
+database Database {
+  [JSONDB]
+  [DB]
+}
+
+package BackupRun {
+  component ExecutionChain
+}
+
+[ExecutionChain] -up-> [Cloud]
+
+package Presentation {
+  package CLI {
+    interface CliComponent
+    component ListTable
+    component BackupDetail
+    component BackupProgess
+    package CliCommand {
+      component Run
+      component List
+      component Show
+      component CliStrategy
+      [Run] -up-> [ExecutionChain]
+      [Run] -up-> [DB]
+      [Run] -up-> [BackupProgess]
+      [Show] -up-> [BackupDetail]
+      [Show] -up-> [DB]
+      [List] -up-> [ListTable]
+      [CliStrategy] -up-> [Run]
+      [CliStrategy] -up-> [List]
+      [CliStrategy] -up-> [Show]
+    }
+    BackupProgess -up-> CliComponent
+    ListTable -up-> CliComponent
+    BackupDetail -up-> CliComponent
+  }
+}
+
+[S3] -> [Cloud]
+[JSONDB] -> [DB]
+[DB] -up-> [Backup]
+[Cloud] -> [Backup]
+
+[Main] -up-> [CliStrategy]
+
+
+@enduml
