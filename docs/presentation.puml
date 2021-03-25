@@ -1,0 +1,20 @@
+@startuml
+
+!startsub Cli
+package Presenter {
+
+  interface Presenter {
+    show()
+  }
+  package Cli {
+    class Command
+    interface CliComponent
+    interface CliDataProvider
+    class TableRow
+
+    TableRow -|> CliComponent
+  }
+}
+
+!endsub
+@enduml

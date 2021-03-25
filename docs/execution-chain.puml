@@ -1,0 +1,40 @@
+@startuml
+
+!startsub Chain
+
+interface Command
+interface CommandContext
+
+class TarBackupExecutor
+
+
+class CommandFactory
+class CheckSumValidationCommand
+class EnabledBackupValidationCommant
+class BackupUploaderCommand
+class BackupTimerCommand {
+  +run()
+}
+
+TarBackupExecutor *-up- CommandContext
+CheckSumValidationCommand *-up- CommandContext
+EnabledBackupValidationCommant *-up- CommandContext
+BackupTimerCommand *-up- CommandContext
+BackupUploaderCommand *-up- CommandContext
+
+TarBackupExecutor -up-> Command
+CheckSumValidationCommand -up-> Command
+EnabledBackupValidationCommant -up-> Command
+BackupTimerCommand -up-> Command
+BackupUploaderCommand -up-> Command
+
+CommandFactory *-up- TarBackupExecutor
+CommandFactory *-up- Command
+CommandFactory *-up- CheckSumValidationCommand
+CommandFactory *-up- EnabledBackupValidationCommant
+CommandFactory *-up- BackupUploaderCommand
+CommandFactory *-up- BackupTimerCommand
+
+
+!endsub
+@enduml

@@ -5,6 +5,13 @@
  * @author Edgard Leal <edgard.leal@sanar.com>
  * @module backup.ts
  */
+
+export interface File {
+  path: string;
+  size: number;
+  mtime: number;
+}
+
 export interface BackupExecution {
   tmpFile?: string;
   checksum?: string;
@@ -17,6 +24,7 @@ export interface BackupExecution {
 
 export default interface Backup {
   currenteExecution: BackupExecution;
+  fileList: File[],
   frequency?: string;
   name: string;
   disabled?: boolean;

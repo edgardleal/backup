@@ -9,7 +9,7 @@ APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 modules = $(wildcard node_modules/*/*.js)
 .PHONY: all clean help run build install lint docs
 
-all: run
+all: list
 
 node_modules/.bin/tsc: package.json
 	yarn || npm i

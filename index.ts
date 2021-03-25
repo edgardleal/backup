@@ -8,15 +8,26 @@
  */
 require('dotenv/config');
 
-import yargs from 'yargs';
+import yargs, { Arguments, Argv } from 'yargs';
 import List from './src/presenter/cli/command/list';
 import Run from './src/presenter/cli/command/run';
+import Show from './src/presenter/cli/command/show';
 
 const { hideBin } = require('yargs/helpers');
 
 (async () => {
   // eslint-disable-next-line no-unused-expressions
   yargs(hideBin(process.argv))
+    .command(
+      'show',
+      'show details about an backup',
+      (builder: Argv) => {
+        builder.positional('name', {
+          description: 'The backup name',
+        })
+      },
+      async (args: Arguments) => new Show().run(args._[1] as string),
+    )
     .command('list', 'list all backups', (yargsP: any) => {
       yargsP
         .positional('sort', {

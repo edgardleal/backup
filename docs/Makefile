@@ -4,7 +4,7 @@
 #
 
 DONE = echo ✓ $@ done
-SOURCES = $(shell find ./ -maxdepth 3 -type f -name '*.puml')
+SOURCES := $(shell find ./ -maxdepth 3 -type f -name '*.puml')
 IMAGES := $(addsuffix .png,$(basename $(SOURCES)))
 .PHONY: all clean help
 
@@ -12,6 +12,9 @@ all: $(IMAGES)
 
 %.png: %.puml lib/plantuml.jar
 	java -jar ./lib/plantuml.jar $<
+
+main.png: $(IMAGES) lib/plantuml.jar
+	java -jar ./lib/plantuml.jar main.puml
 
 lib:
 	mkdir lib

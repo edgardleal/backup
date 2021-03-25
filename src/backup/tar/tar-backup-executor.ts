@@ -16,6 +16,7 @@ import tar from 'tar';
 
 import Command from '../command';
 import BackupCommandContext from '../backup-command-context';
+import { File } from '../../backup-definition/backup';
 
 const pstat = util.promisify(fs.stat);
 
@@ -35,10 +36,15 @@ const logger = debug('backup:tar');
 export default class TarBackupCommand extends Command<BackupCommandContext> {
   private tmpFile: tmp.FileResult;
 
+  setTmpFile(file: tmp.FileResult) {
+    this.tmpFile = file;
+  }
+
   async createTar(backup: BackupCommandContext): Promise<void> {
     let totalFiles = 0;
     const ignoreList = backup.ignoreList || [];
     const finalPath = path.join(process.env.HOME!, backup.path);
+    const fileList: File[] = [];
 
     return new Promise((resolve) => {
       const stream = tar.c({
@@ -60,6 +66,11 @@ export default class TarBackupCommand extends Command<BackupCommandContext> {
 
           if (shouldInclude) {
             totalFiles += 1;
+            fileList.push({
+              path: p,
+              size: 0,
+              mtime: 0,
+            });
           }
 
           return shouldInclude;
@@ -69,11 +80,14 @@ export default class TarBackupCommand extends Command<BackupCommandContext> {
 
       stream.pipe(fs.createWriteStream(this.tmpFile.name));
       stream.on('end', () => {
+        // eslint-disable-next-line no-param-reassign
+        backup.fileList = fileList;
         logger('Data writed to tmp file');
         // eslint-disable-next-line no-param-reassign
         backup.currenteExecution.files = totalFiles;
         // eslint-disable-next-line no-param-reassign
         backup.currenteExecution.checksum = checksum(this.tmpFile.name);
+
         resolve();
       });
     });
