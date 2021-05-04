@@ -24,10 +24,19 @@ node_modules/.last_lint: $(SOURCES) node_modules/.bin/tsc
 
 lint: node_modules/.last_lint
 
+reload:
+	./node_modules/.bin/pm2 reload ecosystem.config.js --update-env
+
+status:
+	./node_modules/.bin/pm2 status backup
+
+logs:
+	./node_modules/.bin/pm2 logs
+
 list: dist/index.js
 	DEBUG=backup* node dist/index.js list
 
-dist/index.js: $(SOURCES) node_modules/.last_lint
+dist/index.js: $(SOURCES) node_modules/.last_lint coverage/index.html
 	./node_modules/.bin/tsc -p tsconfig.json
 	@touch dist/index.js
 

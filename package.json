@@ -42,6 +42,7 @@
     "checksum": "^0.1.1",
     "cli-chart": "^0.3.1",
     "cli-progress": "^3.9.0",
+    "cli-table": "^0.3.6",
     "cli-table2": "^0.2.0",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",

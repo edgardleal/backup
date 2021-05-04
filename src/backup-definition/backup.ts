@@ -9,7 +9,7 @@
 export interface File {
   path: string;
   size: number;
-  mtime: number;
+  mtime: Date;
 }
 
 export interface BackupExecution {
@@ -25,7 +25,7 @@ export interface BackupExecution {
 export default interface Backup {
   currenteExecution: BackupExecution;
   fileList: File[],
-  frequency?: string;
+  frequency: number;
   name: string;
   disabled?: boolean;
   path: string;

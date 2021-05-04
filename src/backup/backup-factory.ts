@@ -7,6 +7,9 @@
  */
 
 import S3FileUploader from '../cloud/aws/S3FileUploader';
+import BackupCommandContext from './backup-command-context';
+import Command from './command';
+import FrequencyValidation from './frequency-validation/frequency-validation';
 import TarBackupCommand from './tar/tar-backup-executor';
 import BackupTimerCommand from './timer/backup-timer-command';
 import BackupUploaderCommand from './upload/backup-uploader-command';
@@ -37,9 +40,15 @@ export default class BackupFactory {
     return tar;
   }
 
+  protected static getFrequencyValidation(): Command<BackupCommandContext> {
+    const frequencyValidator = new FrequencyValidation();
+    frequencyValidator.next = BackupFactory.getTarCommant();
+    return frequencyValidator;
+  }
+
   static getBackupCommant() {
     const result = new EnabledBackupValidationCommant();
-    result.next = BackupFactory.getTarCommant();
+    result.next = BackupFactory.getFrequencyValidation();
     return result;
   }
 }

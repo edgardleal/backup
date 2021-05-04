@@ -37,7 +37,15 @@ export default class Run implements Command {
       logger('Running backup %s ...', backup.name);
       const result = await BackupFactory.getBackupCommant().run(backup);
       result.executions = (result.executions || []);
-      result.executions.push(result.currenteExecution);
+      if (result.currenteExecution.size) {
+        result.executions.push(result.currenteExecution);
+      } else {
+        const index = result.executions.length - 1;
+        const lastExecution = result.executions[index];
+        if (lastExecution) {
+          result.currenteExecution = lastExecution;
+        }
+      }
       await dbFactory.getBackupWriter().write(result);
     }
     logger('Done');

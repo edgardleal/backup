@@ -21,6 +21,8 @@ describe('tar-backup-executor', () => {
       const tmpB = tmp.fileSync();
 
       const backup: Backup = {
+        frequency: 1,
+        fileList: [],
         name: 'Test',
         currenteExecution: {
           date: new Date(),

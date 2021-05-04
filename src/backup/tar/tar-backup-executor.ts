@@ -28,6 +28,18 @@ const pstat = util.promisify(fs.stat);
  */
 const logger = debug('backup:tar');
 
+async function loadFileListMetadata(context: BackupCommandContext) {
+  const fileList = context.fileList || [];
+  for (let i = 0; i < fileList.length; i += 1) {
+    const file = fileList[i];
+    const fileStat = await pstat(file.path);
+    if (fileStat.isFile()) {
+      file.size = fileStat.size;
+      file.mtime = fileStat.mtime;
+    }
+  }
+}
+
 /**
  * Compact backup files using tar command
  * @author edgardleal@gmail.com
@@ -69,7 +81,7 @@ export default class TarBackupCommand extends Command<BackupCommandContext> {
             fileList.push({
               path: p,
               size: 0,
-              mtime: 0,
+              mtime: new Date(),
             });
           }
 
@@ -100,6 +112,7 @@ export default class TarBackupCommand extends Command<BackupCommandContext> {
 
     try {
       await this.createTar(context);
+      await loadFileListMetadata(context);
       const stat = await pstat(context.currenteExecution.tmpFile);
       context.currenteExecution.size = stat.size;
       logger('%s, size: %d', context.currenteExecution.tmpFile, stat.size);

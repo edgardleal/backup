@@ -30,7 +30,8 @@ const logger = debug('backup:checksum-validator');
 export default class ChecksumValidationCommand extends Command<BackupCommandContext> {
   async run(context: BackupCommandContext): Promise<BackupCommandContext> {
     const stat = await pstat(context.currenteExecution.tmpFile!);
-    const lastExecution = (context.executions || [])[context.executions!.length - 1] || {};
+    const executions = (context.executions || []);
+    const lastExecution = executions[executions.length - 1] || {};
     logger('Comparing: %o !== %o', stat.size, lastExecution.size);
     if (!lastExecution || stat.size !== lastExecution.size) {
       return this.runNext(context);
