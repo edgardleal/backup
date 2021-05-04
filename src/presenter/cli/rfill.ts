@@ -1,8 +1,8 @@
 /**
  * rfill.ts
- * Copyright (C) 2021 Sanar
+ * Copyright (C) 2021 
  *
- * @author Edgard Leal <edgard.leal@sanar.com>
+ * @author Edgard Leal <edgard.leal@gmail.com>
  * @module rfill.ts
  */
 export default function rfill(text: string, len: number = 10, charToFill = ' '): string {

@@ -1,8 +1,8 @@
 /**
  * table-row.ts
- * Copyright (C) 2021 Sanar
+ * Copyright (C) 2021 
  *
- * @author Edgard Leal <edgard.leal@sanar.com>
+ * @author Edgard Leal <edgard.leal@gmail.com>
  * @module table-row.ts
  */
 

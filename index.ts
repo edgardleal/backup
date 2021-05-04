@@ -1,9 +1,9 @@
 /**
  * index.ts
- * Copyright (C) 2020 Editora Sanar
+ * Copyright (C) 2020 Editora 
  *
  * Distributed under terms of the MIT license.
- * @author Edgard Leal <edgard.leal@sanar.com>
+ * @author Edgard Leal <edgard.leal@gmail.com>
  * @module index.ts
  */
 require('dotenv/config');
