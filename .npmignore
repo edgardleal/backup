@@ -1,1 +1,4 @@
 coverage/
+*.log
+.env
+./docs

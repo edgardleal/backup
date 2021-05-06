@@ -7,7 +7,7 @@ DONE = echo ✓ $@ done
 SOURCES = $(shell find src/ -type f -name '*.ts') index.ts
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 modules = $(wildcard node_modules/*/*.js)
-.PHONY: all clean help run build install lint docs
+.PHONY: all clean help run build install lint docs version
 
 all: list
 
@@ -30,13 +30,18 @@ reload:
 status:
 	./node_modules/.bin/pm2 status backup
 
+
+CHANGELOG.md: package.json
+	yarn auto-changelog -p
+	git add CHANGELOG.md
+
 logs:
 	./node_modules/.bin/pm2 logs
 
 list: dist/bin.sh
 	DEBUG=backup* node dist/index.js list
 
-publish: dist/bin.sh
+publish: dist/bin.sh CHANGELOG.md
 	npm publish --access=public
 
 dist:

@@ -8,6 +8,7 @@
 
 import BackupReader from '../../../db/backup-reader';
 import DBFactory from '../../../db/db-factory';
+import Since from '../since';
 import { formatSize } from '../size';
 import Command from './command';
 
@@ -42,9 +43,14 @@ export default class Show implements Command {
       lmargin: 5,
       step: 2,
     });
-    console.log('%sName: %s', marging, backup.name); // eslint-disable-line
-    console.log('%Freq : %d', marging, backup.frequency || 1); // eslint-disable-line
-    console.log('%sSize: %s\n', marging, formatSize((backup.currenteExecution || { size: 0 }).size)); // eslint-disable-line
+    const dataProvider = {
+      getData: () => Promise.resolve(backup),
+    };
+    const lastBackup = await new Since(dataProvider).render();
+    console.log('%sName : %s', marging, backup.name); // eslint-disable-line
+    console.log('%sFreq : %d day(s)', marging, backup.frequency || 1); // eslint-disable-line
+    console.log('%sLast : %s', marging, lastBackup); // eslint-disable-line
+    console.log('%sSize : %s\n', marging, formatSize((backup.currenteExecution || { size: 0 }).size)); // eslint-disable-line
 
     const executions = (backup!.executions || []);
     let i = Math.max(0, executions.length - 20);
