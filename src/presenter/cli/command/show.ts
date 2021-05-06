@@ -1,6 +1,6 @@
 /**
  * show.ts
- * Copyright (C) 2021 
+ * Copyright (C) 2021
  *
  * @author Edgard Leal <edgard.leal@gmail.com>
  * @module show.ts
@@ -43,6 +43,7 @@ export default class Show implements Command {
       step: 2,
     });
     console.log('%sName: %s', marging, backup.name); // eslint-disable-line
+    console.log('%Freq : %d', marging, backup.frequency || 1); // eslint-disable-line
     console.log('%sSize: %s\n', marging, formatSize((backup.currenteExecution || { size: 0 }).size)); // eslint-disable-line
 
     const executions = (backup!.executions || []);

@@ -1,6 +1,6 @@
 /**
  * enabled-backup-validation-commant.ts
- * Copyright (C) 2021 
+ * Copyright (C) 2021
  *
  * @author Edgard Leal <edgard.leal@gmail.com>
  * @module enabled-backup-validation-commant.ts

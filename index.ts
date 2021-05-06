@@ -1,6 +1,6 @@
 /**
  * index.ts
- * Copyright (C) 2020 Editora 
+ * Copyright (C) 2020
  *
  * Distributed under terms of the MIT license.
  * @author Edgard Leal <edgard.leal@gmail.com>

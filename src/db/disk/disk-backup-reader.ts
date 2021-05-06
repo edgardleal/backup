@@ -9,6 +9,7 @@
 import fs from 'fs';
 import Backup from '../backup';
 import BackupReader from '../backup-reader';
+import { resolvePath } from './disk-manager';
 
 /**
  * Read backup information from disk
@@ -18,9 +19,9 @@ import BackupReader from '../backup-reader';
 export default class DiskBackupReader implements BackupReader {
   // eslint-disable-next-line class-methods-use-this
   read(name: string): Promise<Backup | null> {
-    let fileName = name;
+    let fileName = resolvePath(name);
     if (!fs.existsSync(fileName)) {
-      fileName = `./db/${name}.json`;
+      fileName = resolvePath(`/db/${name}.json`);
     }
     if (!fs.existsSync(fileName)) {
       return Promise.resolve(null);

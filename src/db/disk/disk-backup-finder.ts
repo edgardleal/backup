@@ -10,16 +10,17 @@ import fs from 'fs';
 import Backup from '../../backup-definition/backup';
 import BackupFinder from '../backup-finder';
 import BackupReader from '../backup-reader';
+import { resolvePath } from './disk-manager';
 
 function allFiles(): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    fs.readdir('./db/', {}, (error: any, files: string[]) => {
+    fs.readdir(resolvePath('/db/'), {}, (error: any, files: string[]) => {
       if (error) {
         reject(error);
       } else {
         resolve(files
           .filter((f: string): boolean => f.endsWith('.json'))
-          .map((f: string): string => `./db/${f}`));
+          .map((f: string): string => resolvePath(`/db/${f}`)));
       }
     });
   });

@@ -8,18 +8,7 @@
 import fs from 'fs';
 import Backup from '../backup';
 import BackupWriter from '../backup-writer';
-
-function mkdir(path: string) {
-  return new Promise((resolve, reject) => {
-    fs.mkdir('./db', { recursive: true }, (error?: any) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(path);
-      }
-    });
-  });
-}
+import { mkdir, resolvePath } from './disk-manager';
 
 /**
  * Write backup information on disk
@@ -30,12 +19,10 @@ function mkdir(path: string) {
 export default class DiskBackupWriter implements BackupWriter {
   // eslint-disable-next-line class-methods-use-this
   async write(backup: Backup): Promise<void> {
-    if (!fs.existsSync('./db/')) {
-      await mkdir('./db');
-    }
+    await mkdir('/db');
     const content = JSON.stringify(backup, null, 2);
     fs.writeFileSync(
-      `./db/${backup.name}.json`,
+      resolvePath(`/db/${backup.name}.json`),
       content,
       {
         encoding: 'utf8',

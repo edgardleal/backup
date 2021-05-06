@@ -1,6 +1,6 @@
 /**
  * backup-factory.ts
- * Copyright (C) 2021 
+ * Copyright (C) 2021
  *
  * @author Edgard Leal <edgard.leal@gmail.com>
  * @module backup-factory.ts
