@@ -33,17 +33,28 @@ status:
 logs:
 	./node_modules/.bin/pm2 logs
 
-list: dist/index.js
+list: dist/bin.sh
 	DEBUG=backup* node dist/index.js list
+
+publish: dist/bin.sh
+	npm publish --access=public
+
+dist:
+	mkdir dist
+
+dist/bin.sh: dist/index.js dist
+	echo '#!/usr/bin/env node' > dist/bin.sh
+	echo 'require("./index.js");' >> dist/bin.sh
+	chmod +x dist/bin.sh
 
 dist/index.js: $(SOURCES) node_modules/.last_lint coverage/index.html
 	./node_modules/.bin/tsc -p tsconfig.json
 	@touch dist/index.js
 
-run: dist/index.js
+run: dist/bin.sh
 	DEBUG=backup* node dist/index.js backup
 
-build: dist/index.js
+build: dist/bin.sh
 
 node_modules/.bin/jest: package.json
 	yarn || npm i

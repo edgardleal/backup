@@ -1,9 +1,9 @@
 {
   "name": "cloud-backup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
-  "bin": "./dist/index.js",
+  "bin": "./dist/bin.sh",
   "scripts": {
     "test": "jest",
     "lint": "eslint  './**/*.ts'"
