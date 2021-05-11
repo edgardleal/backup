@@ -7,20 +7,13 @@
  */
 
 import Backup from '../../backup-definition/backup';
+import { translate as t } from '../../i18n';
 import Presenter from '../presenter';
 import CliDataProvider from './cli-data-provider';
 import Since from './since';
 import FileSize from './size';
 
 const Table = require('cli-table');
-
-const table = new Table({
-  head: [
-    'Backup',
-    'Last run',
-    'Size',
-  ],
-});
 
 /**
  * Show backups data on terminal
@@ -30,6 +23,14 @@ const table = new Table({
 export default class CliPresenter implements Presenter {
   // eslint-disable-next-line class-methods-use-this
   async show(backups: Backup[]) {
+    const table = new Table({
+      head: [
+        t('backup', '???') || 'xxx',
+        t('last_run', '???') || 'xxx',
+        t('size', '???') || 'xxx',
+      ],
+    });
+
     for (let i = 0; i < backups.length; i += 1) {
       const backup = backups[i];
       const promisedBackup = Promise.resolve(backup);

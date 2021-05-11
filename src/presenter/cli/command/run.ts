@@ -5,15 +5,14 @@
  * @author Edgard Leal <edgard.leal@gmail.com>
  * @module run.ts
  */
-import debug from 'debug';
 import Backup from '../../../backup-definition/backup';
 import BackupCommandContext from '../../../backup/backup-command-context';
 import BackupFactory from '../../../backup/backup-factory';
 import DBFactory from '../../../db/db-factory';
+import Out from '../Out';
 
 import Command from './command';
 
-const logger = debug('backup:run');
 /**
  * Run backup command
  * @author edgardleal@gmail.com
@@ -34,7 +33,7 @@ export default class Run implements Command {
         },
       }
 
-      logger('Running backup %s ...', backup.name);
+      Out.t('run.running', backup);
       const result = await BackupFactory.getBackupCommant().run(backup);
       result.executions = (result.executions || []);
       if (result.currenteExecution.size) {
@@ -48,6 +47,6 @@ export default class Run implements Command {
       }
       await dbFactory.getBackupWriter().write(result);
     }
-    logger('Done');
+    Out.t('run.finished');
   }
 }
