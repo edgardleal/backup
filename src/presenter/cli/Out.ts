@@ -14,8 +14,17 @@ export default {
   // eslint-disable-next-line no-console
   info: console.log.bind(console),
   translator: i18next.t,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   t(key: string, map: { [key: string]: any } = {}) {
+    if (this.translator) {
+      this.info(this.translator(key, map));
+    } else {
+      this.info(key);
+    }
+  },
+  d(key: string, map: { [key: string]: any } = {}) {
+    if (!this.verbose) {
+      return;
+    }
     if (this.translator) {
       this.info(this.translator(key, map));
     } else {

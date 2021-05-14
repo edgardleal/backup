@@ -24,6 +24,7 @@ export default class Run implements Command {
     const dbFactory = new DBFactory();
     const backups: Backup[] = await dbFactory.getBackupFinder().find({});
 
+    Out.d('run.running_to', { total: backups.length });
     for (let i = 0; i < backups.length; i += 1) {
       const backup: BackupCommandContext = {
         ...backups[i],

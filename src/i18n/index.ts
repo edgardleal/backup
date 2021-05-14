@@ -13,18 +13,20 @@ import pt from './locales/pt';
 
 let t: TFunction = () => '';
 
+type ResourcesType = {
+  en: typeof pt,
+  pt: typeof pt,
+};
+
 export default async function startTranslations(): Promise<TFunction> {
+  const resources: ResourcesType = {
+    en,
+    pt,
+  };
   return new Promise((resolve, reject) => {
     i18next.use(I18nextCLILanguageDetector).init({
       debug: false,
-      resources: {
-        en: {
-          translation: en,
-        },
-        pt: {
-          translation: pt,
-        },
-      },
+      resources,
     }, (error, translator) => {
       if (error) {
         console.log('Error on translation init: %o', error); // eslint-disable-line
