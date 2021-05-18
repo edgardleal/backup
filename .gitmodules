@@ -1,0 +1,3 @@
+[submodule "backup.wiki"]
+	path = backup.wiki
+	url = git@github.com:edgardleal/backup.wiki.git
