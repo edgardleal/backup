@@ -8,9 +8,13 @@
 
 export default {
   translation: {
+    undefined: '[Undefined]',
     help: {
       show: 'show details about an backup',
       show_name: 'The backup name',
+    },
+    check: {
+      help: 'This command is an alias to backup command',
     },
     run: {
       running_to: 'Running {{ total }} backups...',

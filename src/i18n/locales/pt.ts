@@ -8,9 +8,13 @@
 
 export default {
   translation: {
+    undefined: '[Valor não definido]',
     help: {
       show: 'exibe detalhes sobre um backup',
       show_name: 'O nome do backup',
+    },
+    check: {
+      help: 'Este comando é um Alias para o Comando Backup',
     },
     run: {
       running_to: 'Executando a verificação para {{ total }} backups...',

@@ -40,6 +40,7 @@ const { hideBin } = require('yargs/helpers');
         })
     }, async () => new List().run())
     .command('backup', t('run.help'), () => new Run().run())
+    .command('check', t('check.help'), () => new Run().run())
     .option('verbose', {
       alias: 'v',
       type: 'boolean',
