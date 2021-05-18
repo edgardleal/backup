@@ -19,7 +19,7 @@ export interface BackupExecution {
   time?: number;
   files?: number;
   size?: number;
-  status: 'error' | 'success';
+  status: 'error' | 'success' | 'created';
 }
 
 export default interface Backup {

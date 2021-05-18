@@ -14,6 +14,7 @@ import Run from './src/presenter/cli/command/run';
 import Show from './src/presenter/cli/command/show';
 import setupTranslation, { translate as t } from './src/i18n';
 import Out from './src/presenter/cli/Out';
+import ADD from './src/presenter/cli/command/add';
 
 const { hideBin } = require('yargs/helpers');
 
@@ -39,9 +40,24 @@ const { hideBin } = require('yargs/helpers');
           default: 'lastBackup',
         })
     }, async () => new List().run())
+    .command(
+      'add',
+      t('add.help'),
+      (y: Argv) => y.positional('name', {
+        alias: 'n',
+        demandOption: true,
+        describe: t('add.name'),
+      }).positional('frequency', {
+        default: 1,
+        alias: 'f',
+        describe: t('add.frequency'),
+      }),
+      async (arg: any) => new ADD().run(arg._[1], arg.name, arg.frequency),
+    )
     .command('backup', t('run.help'), () => new Run().run())
     .command('check', t('check.help'), () => new Run().run())
     .option('verbose', {
+      global: true,
       alias: 'v',
       type: 'boolean',
       description: 'Run with verbose logging',

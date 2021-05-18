@@ -9,6 +9,15 @@
 export default {
   translation: {
     undefined: '[Undefined]',
+    add: {
+      success: '[{{ name }}] registered.',
+      help: 'Include a directory do be tracked',
+      name: 'The name used to identify this backup',
+      frequency: 'Numbers of day to do each backup',
+      error: {
+        exists: 'The backup {{ name }} already exists.',
+      },
+    },
     help: {
       show: 'show details about an backup',
       show_name: 'The backup name',
