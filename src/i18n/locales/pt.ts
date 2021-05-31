@@ -8,6 +8,10 @@
 
 export default {
   translation: {
+    config: {
+      invalid_name: 'Nome invalido!',
+      inquire_bucket: 'Qual o bucket utilizado para os backups?',
+    },
     undefined: '[Valor não definido]',
     add: {
       success: '[{{ name }}] adicionado com sucesso',

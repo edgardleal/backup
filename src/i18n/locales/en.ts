@@ -8,6 +8,10 @@
 
 export default {
   translation: {
+    config: {
+      invalid_name: 'Invalid Name!',
+      inquire_bucket: 'What is the AWS S3 Bucket name?',
+    },
     undefined: '[Undefined]',
     add: {
       success: '[{{ name }}] registered.',

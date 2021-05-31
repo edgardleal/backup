@@ -5,11 +5,13 @@
  * @author Edgard Leal <edgard.leal@gmail.com>
  * @module S3FileUploader.ts
  */
+import nconf from 'nconf';
 import debug from 'debug';
 import { S3 } from 'aws-sdk';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import FileUploader, { UploadRequest, UploadResult } from '../file-uploader';
 import getS3Instance from './s3-instance';
+import { ConfigKey } from '../../config';
 
 /**
  * To activate this log, run this code on browser console:
@@ -20,7 +22,7 @@ import getS3Instance from './s3-instance';
 const logger = debug('backup:s3');
 
 // create a new progress bar instance and use shades_classic theme
-
+//
 // start the progress bar with a total value of 200 and start value of 0
 /**
  * Upload a file buffer to aws s3
@@ -34,7 +36,7 @@ export default class S3FileUploader implements FileUploader {
 
     constructor() {
       this.s3 = getS3Instance();
-      this.bucketName = process.env.BUCKET!;
+      this.bucketName = nconf.get(ConfigKey.BUCKET);
     }
 
     // eslint-disable-next-line class-methods-use-this

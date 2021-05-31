@@ -15,11 +15,13 @@ import Show from './src/presenter/cli/command/show';
 import setupTranslation, { translate as t } from './src/i18n';
 import Out from './src/presenter/cli/Out';
 import ADD from './src/presenter/cli/command/add';
+import setupConfig from './src/config';
 
 const { hideBin } = require('yargs/helpers');
 
 (async () => {
   const translator = await setupTranslation();
+  await setupConfig();
   Out.setTranslator(translator);
   // eslint-disable-next-line no-unused-expressions
   const { argv } = yargs(hideBin(process.argv))

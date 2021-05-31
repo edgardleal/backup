@@ -8,15 +8,15 @@ module.exports = {
     'airbnb-base',
   ],
   settings: {
-    "import/extensions": [".js", ".ts"],
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts"]
+    'import/extensions': ['.js', '.ts'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
     },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".ts"]
-      }
-    }
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
   },
   globals: {
     Atomics: 'readonly',
@@ -36,7 +36,9 @@ module.exports = {
     'import/first': 0,
     'no-await-in-loop': 0,
     'import/extensions': 0,
-    'no-unused-vars': "off",
-    '@typescript-eslint/no-unused-vars': "error"
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
   },
 };
