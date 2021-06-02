@@ -1,11 +1,10 @@
 /**
- * rm.ts
+ * disable.ts
  * Copyright (C) 2021
  *
  * @author Edgard Leal
- * @module rm.ts
+ * @module disable.ts
  */
-
 import BackupReader from '../../../db/backup-reader';
 import BackupWriter from '../../../db/backup-writer';
 import DBFactory from '../../../db/db-factory';
@@ -13,11 +12,11 @@ import Out from '../Out';
 import Command from './command';
 
 /**
- * Remove a backup data and remote entries
+ * Enable a backup that is disabled
  * @author edgardleal@gmail.com
- * @since 18.05.21
+ * @since 01.06.21
  */
-export default class RM implements Command {
+export default class Disable implements Command {
   private reader: BackupReader;
 
   private writer: BackupWriter;
@@ -27,14 +26,17 @@ export default class RM implements Command {
     this.writer = new DBFactory().getBackupWriter();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async run(...args: string[]): Promise<void> { // eslint-disable-line
-    const name = args[0];
-    const backup = await this.reader.read(name);
+  async run(...args: string[]): Promise<void> {
+    Out.info('\n\n\n');
+    const backup = await this.reader.read(args[0]);
     if (!backup) {
       Out.t('db.not_found', { name: args[0] }); // eslint-disable-line
       return;
     }
-    Out.t('remove.warning');
+    if (!backup.disabled) {
+      backup.disabled = true;
+      await this.writer.write(backup);
+      Out.t('disable.done', { name: args[0] }); // eslint-disable-line
+    }
   }
 }

@@ -8,6 +8,9 @@
 
 export default {
   translation: {
+    db: {
+      not_found: 'Backup not found [{{ name }}]!',
+    },
     config: {
       invalid_name: 'Invalid Name!',
       inquire_bucket: 'What is the AWS S3 Bucket name?',
@@ -34,6 +37,18 @@ export default {
       help: 'Check if has any backup to run today, if has, run it',
       running: 'Running backup {{name}}...',
       finished: 'Done',
+    },
+    disable: {
+      done: 'The Backup [{{ name }}] was disabled.',
+      help: 'Disable a Backup',
+    },
+    enable: {
+      done: 'The Backup [{{ name }}] was enabled.',
+      help: 'Enable a backup',
+    },
+    remove: {
+      help: 'Remove a Backup from local database and from cloud',
+      warning: 'This command is disabled due to hight risk. You should remove it yourself',
     },
     size: 'Size',
     backup: 'Backup',

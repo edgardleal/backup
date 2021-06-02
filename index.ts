@@ -16,6 +16,9 @@ import setupTranslation, { translate as t } from './src/i18n';
 import Out from './src/presenter/cli/Out';
 import ADD from './src/presenter/cli/command/add';
 import setupConfig from './src/config';
+import RM from './src/presenter/cli/command/rm';
+import Disable from './src/presenter/cli/command/disable';
+import Enable from './src/presenter/cli/command/enable';
 
 const { hideBin } = require('yargs/helpers');
 
@@ -30,6 +33,7 @@ const { hideBin } = require('yargs/helpers');
       t('help.show'),
       (builder: Argv) => {
         builder.positional('name', {
+          demand: true,
           description: t('help.show_name'),
         })
       },
@@ -42,6 +46,24 @@ const { hideBin } = require('yargs/helpers');
           default: 'lastBackup',
         })
     }, async () => new List().run())
+    .command('rm', t('remove.help'), (yargsP: Argv) => {
+      yargsP
+        .option('backup', {
+          demand: true,
+        })
+    }, async (args: Arguments) => new RM().run(args.backup as string))
+    .command('disable', t('disable.help'), (yargsP: Argv) => {
+      yargsP
+        .option('backup', {
+          demand: true,
+        })
+    }, async (args: Arguments) => new Disable().run(args.backup as string))
+    .command('enable', t('enable.help'), (yargsP: Argv) => {
+      yargsP
+        .option('backup', {
+          demand: true,
+        })
+    }, async (args: Arguments) => new Enable().run(args.backup as string))
     .command(
       'add',
       t('add.help'),

@@ -32,7 +32,7 @@ export default class Show implements Command {
     const marging = '   ';
     const backup = await this.reader.read(args[0]);
     if (!backup) {
-      Out.info('Backup [%s] not found', args[0]); // eslint-disable-line
+      Out.t('db.not_found', { name: args[0] }); // eslint-disable-line
       return;
     }
     const chart = new Chart({

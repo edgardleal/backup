@@ -30,7 +30,6 @@ reload:
 status:
 	./node_modules/.bin/pm2 status backup
 
-
 CHANGELOG.md: package.json
 	yarn auto-changelog -p
 	git add CHANGELOG.md

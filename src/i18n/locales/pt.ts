@@ -8,6 +8,9 @@
 
 export default {
   translation: {
+    db: {
+      not_found: 'Backup não encontrado [{{ name }}]!',
+    },
     config: {
       invalid_name: 'Nome invalido!',
       inquire_bucket: 'Qual o bucket utilizado para os backups?',
@@ -34,6 +37,18 @@ export default {
       help: 'Verifica todos os backups, caso preciso, executa o backup',
       running: 'Executando o backup {{name}}...',
       finished: 'Bakups finalizados',
+    },
+    disable: {
+      done: 'O Backup [{{ name }}] foi desativado.',
+      help: 'Desabilita um Backup',
+    },
+    enable: {
+      done: 'O Backup [{{ name }}] foi ativado com sucesso.',
+      help: 'Habilita um Backup',
+    },
+    remove: {
+      help: 'Remove um Backup do banco de dados local e da nuvem',
+      warning: 'Esta opção esta desabilitada por ser de alto risco. Voce pricisa fazer isso manualmente',
     },
     size: 'Tamanho',
     backup: 'Backup',

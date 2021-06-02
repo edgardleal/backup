@@ -6,6 +6,7 @@
  * @module index.ts
  */
 
+import chalk from 'chalk';
 import Backup from '../../backup-definition/backup';
 import { translate as t } from '../../i18n';
 import Presenter from '../presenter';
@@ -14,6 +15,13 @@ import Since from './since';
 import FileSize from './size';
 
 const Table = require('cli-table');
+
+function parseName(backup: Backup): string {
+  if (backup.disabled) {
+    return chalk.strikethrough(backup.name);
+  }
+  return backup.name;
+}
 
 /**
  * Show backups data on terminal
@@ -40,7 +48,7 @@ export default class CliPresenter implements Presenter {
       const date = await (new Since(dataProvider)).render();
       const size = await new FileSize(dataProvider).render();
 
-      table.push([backup.name, date, size]);
+      table.push([parseName(backup), date, size]);
     }
     console.log('%s', table.toString()); // eslint-disable-line
   }
