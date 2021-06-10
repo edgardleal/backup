@@ -19,12 +19,17 @@ async function executeBackup(backupParameter: Backup, dbFactory: DBFactory) {
   const backup: BackupCommandContext = {
     ...backupParameter,
     currenteExecution: {
+      id: (backupParameter.currenteExecution?.id || 0) + 1,
       date: new Date(),
+      type: 'full',
       status: 'success',
     },
   }
 
   const result = await BackupFactory.getBackupCommant().run(backup);
+  if (result.currenteExecution.status === 'skipped') {
+    return result;
+  }
   result.executions = (result.executions || []);
   if (result.currenteExecution.size) {
     result.executions.push(result.currenteExecution);
@@ -45,7 +50,7 @@ function createBackupTask(dbFactory: DBFactory) {
     enabled: () => !backup.disabled,
     task: async (_: any, task: any) => {
       const result = await executeBackup(backup, dbFactory);
-      if (result.currenteExecution.size) {
+      if (result.currenteExecution.status === 'skipped') {
         task.skip();
       }
     },

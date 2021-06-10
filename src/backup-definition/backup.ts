@@ -13,13 +13,15 @@ export interface File {
 }
 
 export interface BackupExecution {
+  id?: number;
+  type?: 'full' | 'partial' | 'incremental';
   tmpFile?: string;
   checksum?: string;
   date: Date;
   time?: number;
   files?: number;
   size?: number;
-  status: 'error' | 'success' | 'created';
+  status: 'error' | 'success' | 'created' | 'skipped';
 }
 
 export default interface Backup {

@@ -36,6 +36,7 @@ export default class ChecksumValidationCommand extends Command<BackupCommandCont
     if (!lastExecution || stat.size !== lastExecution.size) {
       return this.runNext(context);
     }
+    context.currenteExecution.status = 'skipped';
     logger('This backup will not run due to same checksum as the last');
     return Promise.resolve(context);
   }

@@ -21,6 +21,11 @@ This project aims to help you to make backups of your project ( directories )
 2. Keep a history of every backup made
 3. CLI interface to check backup status
 
+## Next Steps
+
+* [ ] email report
+* [ ] backup retention and configuration option
+
 ## Install
 
 `npm install --save -g cloud-backup`

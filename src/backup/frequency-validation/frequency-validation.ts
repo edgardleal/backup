@@ -26,6 +26,7 @@ export default class FrequencyValidation extends Command<BackupCommandContext> {
     if (diff > ((context.frequency || 1) * ONE_DAY)) {
       return this.runNext(context);
     }
+    context.currenteExecution.status = 'skipped';
     return Promise.resolve(context);
   }
 }

@@ -28,6 +28,7 @@ export default class EnabledBackupValidationCommant extends Command<BackupComman
     if (context && !context.disabled) {
       return this.runNext(context);
     }
+    context.currenteExecution.status = 'skipped';
     logger('%s will not run due to disabled status', (context || { name: 'null' }).name);
     return Promise.resolve(context);
   }
